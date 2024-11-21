@@ -30,6 +30,15 @@
         } 
     }
 
+    function showReaction(type, clickedBox){
+        clickedBox.classList.add(type)
+        if(type !== "succes"){
+            setTimeout(function(){
+                clickedBox.classList.remove(type)
+            }, 800)
+        }
+    }
+
     const box = document.createElement("div")
     box.classList.add("box")
 
@@ -47,19 +56,21 @@
             if(i == nb){
                 newbox.classList.add("box-valid")
                 if(nb === board.children.length){
-                    alert ("VICTOIRE !")
+                    board.querySelectorAll(".box").forEach(function(box){
+                        showReaction("success", box)
+                    })
                 }
                 nb++
             }
             else if(i > nb) {
-                alert ("Erreur, recommencez !")
+                showReaction("error", newbox)
                 nb = 1
                 board.querySelectorAll(".box-valid").forEach(function(validBox){
                     validBox.classList.remove("box-valid")
                 })
             }
             else{
-                alert("Case déjà cliquée !")
+                showReaction("notice", newbox)
             }
         })
      }
